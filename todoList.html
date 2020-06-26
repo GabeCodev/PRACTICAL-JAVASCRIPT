@@ -28,6 +28,11 @@
             deleteTodo: function(position) {
                 this.todos.splice(position, 1);
                 this.displayTodos();
+            },
+            toggleCompleted: function (position) {
+                var todo = this.todos[position];
+                todo.Completed = !todo.Completed;
+                this.displayTodos();
             }
         };
     </script>
