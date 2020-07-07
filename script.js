@@ -100,3 +100,15 @@ var handlers = {
 
 
 };
+
+var view = {
+    displayTodos: function() {
+        var todosUl = document.querySelector('ul');
+        todosUl.innerHTML = '';
+        for (let i = 0; i < todoList.todos.length; i++) {
+            var todoLi = document.createElement('li');
+            todosUl.appendChild(todoLi);    
+            
+        }
+    }
+};
