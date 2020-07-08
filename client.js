@@ -95,7 +95,8 @@ var view = {
             } else {
                 todoTextWithCompletion = '( )' + todo.todoText;
             }
-
+            
+            todoLi.id = i;
             todoLi.textContent = todoTextWithCompletion;
             todoLi.appendChild(this.createDeleteButton());
             todosUl.appendChild(todoLi);    
