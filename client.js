@@ -22,25 +22,23 @@ var todoList = {
       var completedTodos = 0;
 
       //Get number of completed todos.
-      for (let i = 0; i < totalTodos; i++) {
-          if (this.todos[i].completed === true) {
+      this.todos.forEach(function (todo) {
+          if (todo.completed === true) {
               completedTodos++;
           }
-          
-      }
-
-      //Case 1: If everything's is true, make everything false
-      if (completedTodos === totalTodos) {
-          for (let i = 0; i < totalTodos; i++) {
-              this.todos[i].completed = false;
-          }
-
-      //Case 2: Otherwise, make everything true    
-      } else {
-          for (let i = 0; i < totalTodos; i++) {
-              this.todos[i].completed = true;
-          }
-      }
+      });
+    
+      this.todos.forEach(function (todo) {
+        //Case 1: If everything's is true, make everything false
+        if (completedTodos === totalTodos) {
+            todo.completed = false;
+        //Case 2: Otherwise, make everything true
+        } else {
+            todo.completed = true;
+        }
+             
+      });
+      
   }
 };
 
@@ -61,10 +59,8 @@ var handlers = {
     view.displayTodos();
   },
 
-  deleteTodo: function() {
-    var deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
-    todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
-    deleteTodoPositionInput.value = '';
+  deleteTodo: function(position) {
+    todoList.deleteTodo(position);
     view.displayTodos();
   },
 
@@ -95,7 +91,7 @@ var view = {
             } else {
                 todoTextWithCompletion = '( )' + todo.todoText;
             }
-            
+
             todoLi.id = i;
             todoLi.textContent = todoTextWithCompletion;
             todoLi.appendChild(this.createDeleteButton());
@@ -108,5 +104,23 @@ var view = {
         deleteButton.textContent = 'Delete';
         deleteButton.className = 'deleteButton';
         return deleteButton;
+    },
+    setUpEventListeners: function () {
+        var todosUl = document.querySelector('ul');
+
+        todosUl.addEventListener('click', function (event) {
+            // Get the element that was clicked on.
+            var elementClicked = event.target;
+            
+            // Check if elementClicked is a delete button.
+            if (elementClicked.className === 'deleteButton') {
+                handlers.deleteTodo(parseInt(elementClicked.parentNode.id));    
+            }
+        });    
     }
 };
+
+view.setUpEventListeners();
+
+
+
